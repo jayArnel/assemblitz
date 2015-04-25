@@ -59,11 +59,11 @@ header {
 }
 
 .output-mc {
-	position: fixed;
+	position: relative;
 	right: 20px;
-	top: 90px;
+	top: -10px;
 
-	height: 200px;
+	height: 180px;
 	width: 40%;
 	
 	float: right;
@@ -71,12 +71,14 @@ header {
 	
 	background-color: #282828;
 	color: white;
+
+	display: inline-block;
 }
 
 .output-fo {
-	top: 315px;
+	top: -275px;
 	right: 20px;
-	position: fixed;
+	position: relative;
 
 	height: 248px;
 	width: 40%;
@@ -86,6 +88,8 @@ header {
 
 	background-color: #282828;
 	color: white;
+
+	display: inline-block;
 }
 
 .btn {
@@ -98,78 +102,23 @@ header {
   	padding: 7px 17px 7px 17px;
   	text-decoration: none;
 
-  	position: fixed;
-	top: 603px;
-	left: 540px;
+  	position: relative;
+	top: 5%;
+	left: 440px;
+	width: 105px;
 
 	cursor: pointer;
+	margin-bottom: 10px;
 }
 
-.input-user {
-	background: #A0A0A0;
-	color: #E8E8E8;
-}
-
-.linedwrap {
-	border: 1px solid #c0c0c0;
-	padding: 3px;
-}
-
-.linedtextarea {
-	padding: 0px;
-	margin: 0px;
-	background: #B0B0B0;
-}
-
-.linedtextarea textarea, .linedwrap .codelines .lineno {
-	font-size: 12pt;
-	font-family: courier;
-	line-height: normal !important;
-}
-
-.linedtextarea textarea {
-	/*padding-right:0.3em;*/
-	padding-top:0.3em;
-	border: 0;
-	background: #909090;
-	color: white;
-	outline: none;
-}
-
-.linedwrap .lines {
-	margin-top: 0px;
-	width: 50px;
-	float: left;
-	overflow: hidden;
-	border-right: 1px solid #c0c0c0;
-	margin-right: 10px;
-}
-
-.linedwrap .codelines {
-	padding-top: 5px;
-}
-
-.linedwrap .codelines .lineno {
-	color:#FFFFFF ;
-	padding-right: 0.5em;
-	padding-top: 0.0em;
-	text-align: right;
-	white-space: nowrap;
-}
 
 /* behave js*/
 
 textarea{
-	width:650px;
+	width:600px;
 
-	/* added */
-	/*height: 250px;*/
-			
-	/* The following three rules make a difference in the script */
-	/*overflow:hidden;
-	line-height: 13px;
-	font-size: 13px;*/
-			
+	overflow:hidden;
+				
 	font-size: 15px;
 	line-height: 15px;
 		
@@ -186,7 +135,20 @@ textarea{
 
 .container{
 	position:relative;
-	display:inline-block;
+	display:inline-block;	
+}
+
+.in-wrapper {
+	width: 50%;
+	height: 485px;
+
+	margin-top: -10px;
+	margin-left: -20px;
+	padding-left: 40px;
+	padding-right: -10px;
+	overflow: auto;
+
+	display: inline-block;
 }
 
 .line-nums{
