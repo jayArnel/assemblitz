@@ -1,17 +1,11 @@
-function Error(name, msg){
+function Error(name, line){
     this.verbose = name;
-    this.msg = msg;
-}
-
-function UnknownMethodError(command, line){
-    this.verbose = "Unsupported Method Error";
-    this.msg = ""
-    this.toString = function() {
-        return this.verbose + ": " + this.msg + " on line" + this.line+ ":" + this.command;
+    this.line = line;
+    this.toString = function(){
+        return this.verbose + ": line " + this.line;
     }
-}
 
-UnknownMethodError.prototype = new Error();
+}
 
 function Stack(cap) {
     this.cap = cap;

@@ -1,5 +1,12 @@
-var out = compile(code);
-display(memory);
+// console.log(code);
+// var out = compile(code);
+
+// if (out != undefined && isError(out)) {
+//     console.log(out.toString());
+// } else {
+//     display(memory);
+//     display(symbol_table);
+// }
 function compile(code) {
     //split lines
     var lines = code.split('\n');
@@ -16,18 +23,20 @@ function compile(code) {
                     memory[i] = 9100 + i; 
                     symbol_table[method.slice(0, method.length - 1)] = i;
                 } else {
-                    return new UnknownMethodError;
+                    return new Error("Unsupported Method Error", line + 1);
                 }
             } else if (machine_code.toString().length == 4){
                 if (params == undefined) {
                     memory[i] = machine_code;
                 } else {
-                    return operand_error;
+                    return new Error("Unsupported Operand Error", line + 1);
                 }
             } else if (machine_code.toString().length == 2) {
-                if (params == undefined || command[2] != undefined) {
-                    return operand_error;
-                } else {
+                if (params == undefined) {
+                    return new Error("Missing Operand Error", line + 1);
+                } else if (command[2] != undefined){
+                    return new Error("Multiple Operand Error", line + 1);
+                }else {
                     if (machine_code % 10 == 1) {
                         if (!isNaN(params)) {
                             params = parseInt(params);
@@ -38,14 +47,14 @@ function compile(code) {
                         }
                     } else if (machine_code % 10 == 2) {
                         if (!isNaN(params)) {
-                            return operand_error;
+                            return new Error("Operand Type Error", line + 1);
                         } else {
                             var var_index = register_var(params);
                             memory[i] = machine_code * 100 + var_index;
                         }
                     } else if (machine_code % 10 == 3) {
                         if (!isNaN(params)) {
-                            return operand_error;
+                            return new Error("Operand Type Error", line + 1);
                         } else {
                             label_queue[i]=command;
                         }
@@ -61,7 +70,7 @@ function compile(code) {
         var label = symbol_table[params];
         var machine_code = symbol_table[method];
         if(label == undefined) {
-            return new Error();
+            return new Error("Unknown Label Error", i);
         } else {
             memory[i] = machine_code * 100 + label;
         }
