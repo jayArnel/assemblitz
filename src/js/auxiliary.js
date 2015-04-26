@@ -35,14 +35,17 @@ function register_var(name) {
         if (code <= 4000 && code >= 3100) {
             return code / 100;
         } else {
-            return new Error();
+            return new Error("Reserved Word Use Error", line);
         }
 
     }
 }
 
 function display(arr) {
+    var string = "\n";
     for (i in arr) {
+        string += arr[i] + "\n\n";
         console.log(i+ ": " + arr[i]);
     }
+    return string;
 }
