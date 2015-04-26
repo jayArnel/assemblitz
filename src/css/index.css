@@ -24,12 +24,10 @@ header {
 	width: 400px;
 	float: left;
 
-	/*margin:-100px 0px 50px 750px;*/
 	top: -25px;
     left: 5%;
 
 	position: absolute;
-	/*border: 2px solid red;*/
 }
 
 .main-div{
@@ -37,11 +35,8 @@ header {
     width: 100%;
     height: 510px;
     max-height: 510px;
-
-   /* left:47%;*/
-    /*margin:0px 0px 0 -520px;*/
     background: #A0A0A0;
-	/*padding: 10px 10px 0 10px;*/
+
 	border-top: 2px solid #585858; 
 	border-bottom: 2px solid #585858; 
 	
@@ -51,13 +46,9 @@ header {
 	position: absolute;
 	width: 1280px;
 	height: 100%;
-	/*background-color: red;*/
-
-	/*top:20px;*/
     left:47%;
 
 	margin: 20px 0 0 -580px;
-	/*border: 2px solid red;*/
 }
 
 .input-div {
@@ -110,11 +101,9 @@ header {
   	position: fixed;
   	float: left;
 
-		top: 615px;
-		/*bottom: 50px;*/
-		left: 180px;
-
-		cursor: pointer;
+	top: 615px;
+	left: 180px;
+	cursor: pointer;
 }
 
 .btn-stack {
@@ -139,48 +128,49 @@ header {
 	color: #E8E8E8;
 }
 
-
-textarea{
-	width: 650px;
-			
-	/* The following three rules make a difference in the script */
-	overflow:auto;
-	line-height: 15px;
-	font-size: 15px;
-			
-	border:1px solid #999;
-	padding:10px;
-	font-family: courier;
-	margin:0;
-	display:block;
-	outline:none;
-	background: #989898;
-	color: #FFFFFF;
-	
+.linedwrap {
+	border: 1px solid #c0c0c0;
+	padding: 3px;
 }
 
-/*textarea:focus{
-	border-color:#333;
-}*/
-
-.container{
-	position:relative;
-	display:inline-block;
-	/*max-height: 500px;*/
-	/*overflow: auto;*/
+.linedtextarea {
+	padding: 0px;
+	margin: 0px;
+	background: #B0B0B0;
 }
 
-.line-nums{
-	font-size:15px;
-	line-height:15px;
-	padding:10px 4px;
+.linedtextarea textarea, .linedwrap .codelines .lineno {
+	font-size: 12pt;
 	font-family: courier;
-	background: #EEE;
-	position: absolute;
-	width: 20px;
-	left: -28px;
-	bottom: 0;
-	top: 0;
-	text-align:right;
-	
+	line-height: normal !important;
+}
+
+.linedtextarea textarea {
+	/*padding-right:0.3em;*/
+	padding-top:0.3em;
+	border: 0;
+	background: #909090;
+	color: white;
+	outline: none;
+}
+
+.linedwrap .lines {
+	margin-top: 0px;
+	width: 50px;
+	float: left;
+	overflow: hidden;
+	border-right: 1px solid #c0c0c0;
+	margin-right: 10px;
+}
+
+.linedwrap .codelines {
+	padding-top: 5px;
+}
+
+.linedwrap .codelines .lineno {
+	color:#FFFFFF ;
+	padding-right: 0.5em;
+	padding-top: 0.0em;
+	text-align: right;
+	white-space: nowrap;
 }
