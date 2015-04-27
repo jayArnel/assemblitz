@@ -3,6 +3,7 @@
 <head>
     <title>CMSC124</title>
     <link rel="stylesheet" type="text/css" href="src/css/index.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 </head>
 <body>
     <header>
@@ -13,17 +14,26 @@
 
     <div class = "main-div">
         <div class = "wrapper">
+            <!-- <textarea class="lined" rows="24" cols="90" autofocus required placeholder = "Type your code here...">
+            </textarea> -->
+
             <div class="container">
                 <div class="line-nums"><span>1</span></div>
-                <textarea id="input-user" autofocus required resize: none;></textarea>
+                <textarea id="demo" rows = "30" autofocus required placeholder = "Type your code here...."></textarea>
             </div>
-            <script type='text/javascript' src="src/js/behave.js"></script>
+
+            <script type='text/javascript' src="src/js/liner_2.js"></script>
             <script type="text/javascript" src ="src/js/liner.js"></script>
+
+            <script type="text/javascript" src ="src/js/behave.js"></script>
+            <script type="text/javascript" src ="src/js/liner_behave.js"></script>
+
             <script type='text/javascript' src="src/js/classes.js"></script>
             <script type='text/javascript' src="src/js/resources.js"></script>
             <script type='text/javascript' src="src/js/auxiliary.js"></script>
             <script type='text/javascript' src="src/js/compiler.js"></script>
             <script type='text/javascript' src="src/js/action.js"></script>
+            
             <div class = "output-mc" id = "mla">
                 Sample Output
             </div>
@@ -32,10 +42,7 @@
                 Sample Output
             </div>
 
-            <div class = "btn">
-                View Stack
-            </div>
-            <div class = "btn-stack" onclick="assemble()">
+            <div class = "btn" onclick="assemble()">
                 Assemble
             </div>
 

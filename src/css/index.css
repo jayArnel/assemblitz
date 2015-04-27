@@ -5,7 +5,7 @@
 
 body {
 	font-family: courier;
-	overflow: hidden;
+	overflow: auto;
 	background-color: #FFFFFF;
 
 }
@@ -24,24 +24,19 @@ header {
 	width: 400px;
 	float: left;
 
-	/*margin:-100px 0px 50px 750px;*/
 	top: -25px;
     left: 5%;
 
 	position: absolute;
-	/*border: 2px solid red;*/
 }
 
 .main-div{
     position:absolute;
     width: 100%;
-    height: 510px;
+    height: 507px;
     max-height: 510px;
-
-   /* left:47%;*/
-    /*margin:0px 0px 0 -520px;*/
     background: #A0A0A0;
-	/*padding: 10px 10px 0 10px;*/
+
 	border-top: 2px solid #585858; 
 	border-bottom: 2px solid #585858; 
 	
@@ -51,13 +46,9 @@ header {
 	position: absolute;
 	width: 1280px;
 	height: 100%;
-	/*background-color: red;*/
-
-	/*top:20px;*/
     left:47%;
 
 	margin: 20px 0 0 -580px;
-	/*border: 2px solid red;*/
 }
 
 .input-div {
@@ -83,7 +74,7 @@ header {
 }
 
 .output-fo {
-	top: 320px;
+	top: 315px;
 	right: 20px;
 	position: fixed;
 
@@ -98,26 +89,6 @@ header {
 }
 
 .btn {
-  	border-radius: 1px;
- 		text-shadow: 1px 1px 3px #666666;
-    color: #ffffff;
-
-  	font-size: 23px;
-  	background:#980000;
-  	padding: 7px 17px 7px 17px;
-  	text-decoration: none;
-
-  	position: fixed;
-  	float: left;
-
-		top: 615px;
-		/*bottom: 50px;*/
-		left: 180px;
-
-		cursor: pointer;
-}
-
-.btn-stack {
 	border-radius: 1px;
   	text-shadow: 1px 1px 3px #666666;
   	
@@ -128,8 +99,8 @@ header {
   	text-decoration: none;
 
   	position: fixed;
-	top: 615px;
-	left: 440px;
+	top: 603px;
+	left: 540px;
 
 	cursor: pointer;
 }
@@ -139,42 +110,90 @@ header {
 	color: #E8E8E8;
 }
 
+.linedwrap {
+	border: 1px solid #c0c0c0;
+	padding: 3px;
+}
+
+.linedtextarea {
+	padding: 0px;
+	margin: 0px;
+	background: #B0B0B0;
+}
+
+.linedtextarea textarea, .linedwrap .codelines .lineno {
+	font-size: 12pt;
+	font-family: courier;
+	line-height: normal !important;
+}
+
+.linedtextarea textarea {
+	/*padding-right:0.3em;*/
+	padding-top:0.3em;
+	border: 0;
+	background: #909090;
+	color: white;
+	outline: none;
+}
+
+.linedwrap .lines {
+	margin-top: 0px;
+	width: 50px;
+	float: left;
+	overflow: hidden;
+	border-right: 1px solid #c0c0c0;
+	margin-right: 10px;
+}
+
+.linedwrap .codelines {
+	padding-top: 5px;
+}
+
+.linedwrap .codelines .lineno {
+	color:#FFFFFF ;
+	padding-right: 0.5em;
+	padding-top: 0.0em;
+	text-align: right;
+	white-space: nowrap;
+}
+
+/* behave js*/
 
 textarea{
-	width: 650px;
+	width:650px;
+
+	/* added */
+	/*height: 250px;*/
 			
 	/* The following three rules make a difference in the script */
-	overflow:auto;
-	line-height: 15px;
-	font-size: 15px;
+	/*overflow:hidden;
+	line-height: 13px;
+	font-size: 13px;*/
 			
+	font-size: 15px;
+	line-height: 15px;
+		
 	border:1px solid #999;
 	padding:10px;
-	font-family: courier;
+	font-family: monospace;
 	margin:0;
 	display:block;
 	outline:none;
-	background: #989898;
-	color: #FFFFFF;
-	
-}
 
-/*textarea:focus{
-	border-color:#333;
-}*/
+	background: #909090;
+	color: white;
+}
 
 .container{
 	position:relative;
 	display:inline-block;
-	/*max-height: 500px;*/
-	/*overflow: auto;*/
 }
 
 .line-nums{
 	font-size:15px;
 	line-height:15px;
 	padding:10px 4px;
-	font-family: courier;
+	font-family: monospace;
 	background: #EEE;
 	position: absolute;
 	width: 20px;
@@ -182,5 +201,4 @@ textarea{
 	bottom: 0;
 	top: 0;
 	text-align:right;
-	
 }
