@@ -1,6 +1,6 @@
 console.log("assemble");
 function assemble() {
-		var code = document.getElementById("input-user").value;
+		var code = document.getElementById("demo").value;
 		var out = compile(code);
 		if (out != undefined && isError(out)) {
 		    document.getElementById("out").innerHTML = document.getElementById("out").innerHTML + out.toString();
