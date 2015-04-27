@@ -6,7 +6,7 @@
 // } else {
 //     display(memory);
 //     display(symbol_table);
-// }
+// }    
 function compile(code) {
     //split lines
     var lines = code.split('\n');
@@ -75,4 +75,25 @@ function compile(code) {
             memory[i] = machine_code * 100 + label;
         }
     }       
+}
+
+
+function register_var(name) {
+    var code = symbol_table[name];
+    if (code == undefined) {
+        for (var i = 31; i < 40; i++) {
+            if (memory[i] == undefined) {
+                symbol_table[name] = i;
+                return i;
+            }
+        }
+        return new Error();
+    } else {
+        if (code <= 4000 && code >= 3100) {
+            return code / 100;
+        } else {
+            return new Error("Reserved Word Use Error", line);
+        }
+
+    }
 }

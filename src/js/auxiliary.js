@@ -21,26 +21,6 @@ function clean_array(arr) {
     
 }
 
-function register_var(name) {
-    var code = symbol_table[name];
-    if (code == undefined) {
-        for (var i = 31; i < 40; i++) {
-            if (memory[i] == undefined) {
-                symbol_table[name] = memory[i];
-                return i;
-            }
-        }
-        return new Error();
-    } else {
-        if (code <= 4000 && code >= 3100) {
-            return code / 100;
-        } else {
-            return new Error("Reserved Word Use Error", line);
-        }
-
-    }
-}
-
 function display(arr) {
     var string = "\n";
     for (i in arr) {
