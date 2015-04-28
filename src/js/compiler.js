@@ -1,12 +1,3 @@
-// display(memory);
-clean = clean_code(code);
-console.log(translate(code));
-for (i in clean) {
-    console.log(i + ": " + clean[i]);
-}
-for (i in memory) {
-    console.log(i + ": " + memory[i]);
-}
 function clean_code(code) {
     var clean = [];
     var lines = code.split('\n');
@@ -72,6 +63,18 @@ function translate(code) {
         } else {
             return new Error("Unsupported Method", command.line);
         }
+    }   
+}
+
+function execute() {
+    if (memory[0] != 1000) {
+        return new Error("Missing BEGIN Statement");
+    }
+    for (var i = 1; i <  29 || memory[i] == 1111; i++) {
+        var code = +memory[i];
+        var method = code / 100;
+        var param = code - method;
+
     }   
 }
 
