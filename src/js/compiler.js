@@ -1,99 +1,123 @@
-// console.log(code);
-// var out = compile(code);
-
-// if (out != undefined && isError(out)) {
-//     console.log(out.toString());
-// } else {
-//     display(memory);
-//     display(symbol_table);
-// }    
-function compile(code) {
-    //split lines
+// display(memory);
+clean = clean_code(code);
+console.log(translate(code));
+for (i in clean) {
+    console.log(i + ": " + clean[i]);
+}
+for (i in memory) {
+    console.log(i + ": " + memory[i]);
+}
+function clean_code(code) {
+    var clean = [];
     var lines = code.split('\n');
+    for (i in lines) {
+        var l = lines[i].trim();
+        if (l.length > 0) {
+            clean.push(new Command(i, l));
+        }
+    }
+    return clean;
+}
 
-    //for each line, separate method and parameters
-    for (var line = 0, i = 0; line < lines.length; line++) {
-        if (lines[line].length > 0) {
-            var command = clean_array(lines[line].split(' '));
-            var method = command[0];
-            var params = command[1];
-            var machine_code = symbol_table[method];
-            if (machine_code == undefined) {
-                if (method[method.length-1] == ':' && params == undefined) {
-                    memory[i] = 9100 + i; 
-                    symbol_table[method.slice(0, method.length - 1)] = i;
+function add_labels(lines) {
+    for (i in lines){
+        var command = lines[i];
+        var name = command.name;
+        if (name.charAt(name.length - 1) == ':'){
+            var label = name.substring(0, name.length - 1);
+            symbol_table[label] = 91 + i;
+        }
+    }
+}
+
+function translate(code) {
+    memory = new Array(40);
+    var lines = clean_code(code);
+    add_labels(lines);
+    for (i in lines) {
+        var command = lines[i];
+        var name = command.name;
+        if (isMethod(name)) {  
+            if (no_param(name)) {
+                if (command.num_of_params > 0) {
+                    return new Error("Unsupported Operand", command.line);
                 } else {
-                    return new Error("Unsupported Method Error", line + 1);
+                    memory[i] = symbol_table[name];
                 }
-            } else if (machine_code.toString().length == 4){
-                if (params == undefined) {
-                    memory[i] = machine_code;
+            } else if (has_param(name)){
+                if (command.num_of_params > 1) {
+                    return new Error("Unsupported Multiple Operand", command.line);
+                } else if (command.num_of_params == 0) {
+                    return new Error("Missing Operand", command.line);
                 } else {
-                    return new Error("Unsupported Operand Error", line + 1);
-                }
-            } else if (machine_code.toString().length == 2) {
-                if (params == undefined) {
-                    return new Error("Missing Operand Error", line + 1);
-                } else if (command[2] != undefined){
-                    return new Error("Multiple Operand Error", line + 1);
-                }else {
-                    if (machine_code % 10 == 1) {
-                        if (!isNaN(params)) {
-                            params = parseInt(params);
-                            memory[i] = machine_code * 100 + params;
+                    var param = command.params[0];
+                    if (var_param(name) && num_param(name)){
+                        if (!isNaN(param)) {
+                            memory[i] = symbol_table[name] * 100 + (+param);
                         } else {
-                            var var_index = register_var(params);
-                            memory[i] = machine_code * 100 + var_index;
+                            var mem = register(param);
+                            memory[i] = symbol_table[name] * 100 + mem;
                         }
-                    } else if (machine_code % 10 == 2) {
-                        if (!isNaN(params)) {
-                            return new Error("Operand Type Error", line + 1);
-                        } else {
-                            var var_index = register_var(params);
-                            memory[i] = machine_code * 100 + var_index;
-                        }
-                    } else if (machine_code % 10 == 3) {
-                        if (!isNaN(params)) {
-                            return new Error("Operand Type Error", line + 1);
-                        } else {
-                            label_queue[i]=command;
-                        }
+                    } else if (var_param(name)) {
+                        var mem = register(param);   
+                        memory[i] = symbol_table[name] * 100 + mem;
+                    } else if (label_param(name)){
+                        memory[i] = symbol_table[name] * 100 + (+(symbol_table[param]-9100));
                     }
                 }
             }
-            i++;
-        }
-    }
-    for (i in label_queue) {
-        var method = label_queue[i][0]
-        var params = label_queue[i][1]
-        var label = symbol_table[params];
-        var machine_code = symbol_table[method];
-        if(label == undefined) {
-            return new Error("Unknown Label Error", i);
+        } else if (isLabel(name)) {
+            name = name.substring(0, name.length - 1);
+            memory[i] = symbol_table[name];
         } else {
-            memory[i] = machine_code * 100 + label;
+            return new Error("Unsupported Method", command.line);
         }
-    }       
+    }   
 }
 
-
-function register_var(name) {
-    var code = symbol_table[name];
-    if (code == undefined) {
-        for (var i = 31; i < 40; i++) {
+function register(name){
+    var add = symbol_table[name];
+    if (add == undefined) {
+        for (var i = 30; i < 39; i++){
             if (memory[i] == undefined) {
                 symbol_table[name] = i;
+                memory[i] = 0;
                 return i;
             }
         }
-        return new Error();
-    } else {
-        if (code <= 4000 && code >= 3100) {
-            return code / 100;
-        } else {
-            return new Error("Reserved Word Use Error", line);
-        }
-
+        return new Error("Memory Overflow");
     }
+    return add;
+}
+function isMethod(name) {
+    return symbol_table[name] != undefined && !isLabel(name);
+}
+
+function isLabel(name) {
+    if (name.charAt(name.length - 1) == ':'){
+        name = name.substring(0, name.length - 1);
+    }
+    var code = symbol_table[name];
+    return code != undefined && code.toString().match(/91\d\d/) != undefined;
+}
+
+function no_param(method) {
+    return symbol_table[method].toString().length == 4;
+}
+
+function has_param(method) {
+    return symbol_table[method].toString().length == 2;   
+}
+
+function num_param(method) {
+    return symbol_table[method] % 10 == 1;   
+}
+
+function var_param(method) {
+    var code = symbol_table[method];
+    return code % 10 == 2 || code % 10 == 1;   
+}
+
+function label_param(method) {
+    return symbol_table[method] % 10 == 3;    
 }

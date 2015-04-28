@@ -1,10 +1,10 @@
 function Error(name, line){
     this.verbose = name;
     this.line = line;
-    this.toString = function(){
-        return this.verbose + ": line " + this.line;
-    }
+}
 
+Error.prototype.toString = function(){
+    return "Error: "+this.verbose + ". Line " + this.line;
 }
 
 function Stack(cap) {
@@ -38,4 +38,25 @@ function Stack(cap) {
     this.size = function(){
         return this.stack.length;
     }
+}
+
+function Command(line, command) {
+    this.line = line;
+    this.params = [];
+    var tokens = command.split(' ');
+    this.name = tokens[0];
+    for (var i = 1; i < tokens.length; i++){
+        if (tokens[i].length > 0) {
+            this.params.push(tokens[i]);
+        }
+    }
+
+    this.command = this.name +" "+ this.params.join(' ');
+    this.num_of_params = function(){
+        this.params.length;
+    }
+}
+
+Command.prototype.toString = function() {
+    return this.line +": " + this.command;
 }

@@ -1,4 +1,3 @@
-console.log("assemble");
 function assemble() {
 		var code = document.getElementById("demo").value;
 		var out = compile(code);
