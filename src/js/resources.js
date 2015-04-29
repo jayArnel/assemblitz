@@ -1,4 +1,5 @@
 //Data Structures
+var reg = new Stack(5);
 var symbol_table = [];
 
 symbol_table['begin'] = 1000;

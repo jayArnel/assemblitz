@@ -12,7 +12,7 @@ function Stack(cap) {
     this.stack = [];
 
     this.push = function(e) {
-        if (stack.length + 1 > cap) {
+        if (this.stack.length + 1 > cap) {
             return new Error('Stack Overflow');
         } else {
             this.stack.push(e);
@@ -20,7 +20,7 @@ function Stack(cap) {
     }
 
     this.pop = function(e) {
-        if (stack.length == 0) {
+        if (this.stack.length == 0) {
             return new Error('Empty Stack');
         } else {
             return this.stack.pop();
@@ -28,7 +28,7 @@ function Stack(cap) {
     }
 
     this.peek = function() {
-        if (stack.length == 0) {
+        if (this.stack.length == 0) {
             return new Error('Stack Empty');
         } else {
             return this.stack[stack.length - 1];

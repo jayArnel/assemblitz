@@ -10,6 +10,10 @@ for (j in memory) {
 
 execute();
 
+console.log('RAM');
+for (j in memory) {
+    console.log(j+": " +memory[j]);
+}
 function clean_code(code) {
     var clean = [];
     var lines = code.split('\n');
@@ -29,6 +33,7 @@ function add_labels(lines) {
         if (name.charAt(name.length - 1) == ':'){
             var label = name.substring(0, name.length - 1);
             symbol_table[label] = 91 + i;
+            symbol_table[91 + i] = +i;
         }
     }
 }
@@ -59,7 +64,7 @@ function translate(code) {
                         } else {
                             var mem = register(param);
                             memory[i] = (symbol_table[name]+2) * 100 + mem;
-                        }
+                        } 
                     } else if (var_param(name)) {
                         var mem = register(param);   
                         memory[i] = symbol_table[name] * 100 + mem;
@@ -83,38 +88,73 @@ function execute() {
     } else {
         console.log('begin');
     }
-    for (var i = 1; i < 29 || +memory[i] != 1011; i++) {
+    for (var i = 1; i < 29 && +memory[i] != 1011; i++) {
         var code = memory[i];
-        var method = code / 100;
-        console.log(code + ": " + method);
-        var param = code - method;
-        // if (method == 11) {
-        //     console.log('mod');
-        // } else if (method == 12) {
-        //     console.log('add');
-        // } else if (method == 13) {
-        //     console.log('sub');
-        // } else if (method == 14){
-        //     conosle.log('cmp');
-        // } else if (method == 21) {
-        //     console.log('pushi');
-        // } else if (method == 22) {
-        //     console.log('pushv');
-        // } else if (method == 42) {
-        //     console.log('pop');
-        // } else if (method == 52) {
-        //     console.log('read');
-        // } else if (method == 62) {
-        //     console.log('disp');
-        // } else if (method == 63) {
-        //     console.log('jmp');
-        // } else if (method == 73) {
-        //     console.log('jl');
-        // } else if (method == 83) {
-        //     console.log('jg');
-        // } else if (method == 93) {
-        //     console.log('jeq');
-        // }
+        var method = +(code.toString().substring(0,2));
+        var param = +(code % 100);
+        if (method == 11) {
+            console.log('mod');
+            var arg2 = reg.pop();
+            var arg1 = reg.pop();
+            reg.push(arg1 % arg2);
+        } else if (method == 12) {
+            console.log('add');
+            var arg2 = reg.pop();
+            var arg1 = reg.pop();
+            reg.push(arg1 + arg2);
+        } else if (method == 13) {
+            console.log('sub');
+            var arg2 = reg.pop();
+            var arg1 = reg.pop();
+            reg.push(arg1 - arg2);
+        } else if (method == 14){
+            conosle.log('cmp');
+            var arg2 = reg.pop();
+            var arg1 = reg.pop();
+            reg.push(arg1 == arg2);
+        } else if (method == 21) {
+            console.log('pushi');
+            reg.push(param);
+        } else if (method == 22) {
+            console.log('pushv');
+            var val = memory[param];
+            reg.push(val);
+        } else if (method == 42) {
+            console.log('pop');
+            var val = reg.pop();
+            memory[param] = val;
+        } else if (method == 52) {
+            console.log('read');
+            var val = prompt("Input:");
+            memory[param] = val;
+        } else if (method == 62) {
+            console.log('disp');
+            console.log(memory[param]);
+        } else if (method == 63) {
+            console.log('jmp');
+            i = param;
+        } else if (method == 73) {
+            console.log('jl');
+            var arg2 = reg.pop();
+            var arg1 = reg.pop();
+            if (arg2 < arg1) {
+                i = param;
+            }
+        } else if (method == 83) {
+            console.log('jg');
+            var arg2 = reg.pop();
+            var arg1 = reg.pop();
+            if (arg2 > arg1) {
+                i = param;
+            }
+        } else if (method == 93) {
+            console.log('jeq');
+            var arg2 = reg.pop();
+            var arg1 = reg.pop();
+            if (arg2 == arg1) {
+                i = param;
+            }
+        }
     }   
 }
 
