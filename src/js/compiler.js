@@ -1,3 +1,15 @@
+translate(code);
+console.log('Symbol Table');
+for (i in symbol_table) {
+    console.log(i+": " +symbol_table[i]);
+}
+console.log('RAM');
+for (j in memory) {
+    console.log(j+": " +memory[j]);
+}
+
+execute();
+
 function clean_code(code) {
     var clean = [];
     var lines = code.split('\n');
@@ -22,7 +34,6 @@ function add_labels(lines) {
 }
 
 function translate(code) {
-    memory = new Array(40);
     var lines = clean_code(code);
     add_labels(lines);
     for (i in lines) {
@@ -44,10 +55,10 @@ function translate(code) {
                     var param = command.params[0];
                     if (var_param(name) && num_param(name)){
                         if (!isNaN(param)) {
-                            memory[i] = symbol_table[name] * 100 + (+param);
+                            memory[i] = (symbol_table[name]+1) * 100 + (+param);
                         } else {
                             var mem = register(param);
-                            memory[i] = symbol_table[name] * 100 + mem;
+                            memory[i] = (symbol_table[name]+2) * 100 + mem;
                         }
                     } else if (var_param(name)) {
                         var mem = register(param);   
@@ -69,12 +80,41 @@ function translate(code) {
 function execute() {
     if (memory[0] != 1000) {
         return new Error("Missing BEGIN Statement");
+    } else {
+        console.log('begin');
     }
-    for (var i = 1; i <  29 || memory[i] == 1111; i++) {
-        var code = +memory[i];
+    for (var i = 1; i < 29 || +memory[i] != 1011; i++) {
+        var code = memory[i];
         var method = code / 100;
+        console.log(code + ": " + method);
         var param = code - method;
-
+        // if (method == 11) {
+        //     console.log('mod');
+        // } else if (method == 12) {
+        //     console.log('add');
+        // } else if (method == 13) {
+        //     console.log('sub');
+        // } else if (method == 14){
+        //     conosle.log('cmp');
+        // } else if (method == 21) {
+        //     console.log('pushi');
+        // } else if (method == 22) {
+        //     console.log('pushv');
+        // } else if (method == 42) {
+        //     console.log('pop');
+        // } else if (method == 52) {
+        //     console.log('read');
+        // } else if (method == 62) {
+        //     console.log('disp');
+        // } else if (method == 63) {
+        //     console.log('jmp');
+        // } else if (method == 73) {
+        //     console.log('jl');
+        // } else if (method == 83) {
+        //     console.log('jg');
+        // } else if (method == 93) {
+        //     console.log('jeq');
+        // }
     }   
 }
 
@@ -113,12 +153,12 @@ function has_param(method) {
 }
 
 function num_param(method) {
-    return symbol_table[method] % 10 == 1;   
+    return symbol_table[method] % 10 == 0;   
 }
 
 function var_param(method) {
     var code = symbol_table[method];
-    return code % 10 == 2 || code % 10 == 1;   
+    return code % 10 == 2 || code % 10 == 0;   
 }
 
 function label_param(method) {

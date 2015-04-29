@@ -2,13 +2,13 @@
 var symbol_table = [];
 
 symbol_table['begin'] = 1000;
-symbol_table['end'] = 1111;
-symbol_table['mod'] = 2100;
-symbol_table['add'] = 2200;
-symbol_table['sub'] = 2300;
-symbol_table['cmp'] = 2400;
+symbol_table['end'] = 1011;
+symbol_table['mod'] = 1100;
+symbol_table['add'] = 1200;
+symbol_table['sub'] = 1300;
+symbol_table['cmp'] = 1400;
 
-symbol_table['push'] = 41;
+symbol_table['push'] = 20;
 symbol_table['pop'] = 42;
 symbol_table['read'] = 52;
 symbol_table['disp'] = 62;
