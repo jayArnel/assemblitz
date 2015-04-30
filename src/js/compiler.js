@@ -1,14 +1,14 @@
-translate(code);
-console.log('Symbol Table');
-for (i in symbol_table) {
-    console.log(i+": " +symbol_table[i]);
-}
-console.log('RAM');
-for (j in memory) {
-    console.log(j+": " +memory[j]);
-}
+// translate(code);
+// console.log('Symbol Table');
+// for (i in symbol_table) {
+//     console.log(i+": " +symbol_table[i]);
+// }
+// console.log('RAM');
+// for (j in memory) {
+//     console.log(j+": " +memory[j]);
+// }
 
-execute();
+// execute();
 
 console.log('RAM');
 for (j in memory) {

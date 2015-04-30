@@ -19,24 +19,3 @@ symbol_table['jg'] = 83;
 symbol_table['jeq'] = 93;
 
 var memory = new Array(40);
-
-var code = "begin \n \
-\n \
-\n \
-\n \
-            read N \n\
-push N \n\
-push 2 \n\
-mod \n\
-\n \
-push 0\n\
-jeq      even\n\
-push 0\n\
-pop ans\n\
-jmp stop\n\
-even:\n\
-push 1\n\
-pop ans\n\
-stop:\n\
-disp ans\n\
-end";
