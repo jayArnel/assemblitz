@@ -20,7 +20,7 @@ function clean_code(code) {
     for (i in lines) {
         var l = lines[i].trim();
         if (l.length > 0) {
-            clean.push(new Command(i, l));
+            clean.push(new Command(+i + 1, l));
         }
     }
     return clean;
@@ -43,6 +43,8 @@ function translate(code) {
     add_labels(lines);
     for (i in lines) {
         var command = lines[i];
+        command.index = +i;
+        console.log(command);
         var name = command.name;
         if (isMethod(name)) {  
             if (no_param(name)) {
@@ -79,16 +81,16 @@ function translate(code) {
         } else {
             return new Error("Unsupported Method", command.line);
         }
-    }   
+    }
 }
 
 function execute() {
     if (memory[0] != 1000) {
-        return new Error("Missing BEGIN Statement");
+        return new Error("Missing BEGIN Statement", 0);
     } else {
         console.log('begin');
     }
-    for (var i = 1; i < 29 && +memory[i] != 1011; i++) {
+    for (var i = 1; i < 29 && +memory[i] != 1011 && memory[i] != undefined; i++) {
         var code = memory[i];
         var method = +(code.toString().substring(0,2));
         var param = +(code % 100);
@@ -154,6 +156,9 @@ function execute() {
             if (arg2 == arg1) {
                 i = param;
             }
+        } else if (method == 10) {
+            console.log('begin');
+            return new Error("Misplaced BEGIN Statement", commands[i].line);
         }
     }   
 }
@@ -203,4 +208,8 @@ function var_param(method) {
 
 function label_param(method) {
     return symbol_table[method] % 10 == 3;    
+}
+
+function pop_from_stack() {
+
 }
