@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Assemblitz Help Page</title>
+		<link rel="stylesheet" type="text/css" href="src/css/reset.css">
+    	<link rel="stylesheet" type="text/css" href="src/css/help.css">
+	</head>
+	<body>
+		<header>
+			<img src="src/img/logo2.png" alt="Assemblitz Logo">
+
+		</header>
+		<main>
+			<h1>Welcome to Assemblitz</h1><br><br>
+				<h2>What is Assemblitz</h2>
+					<p>Assemblitz is a light web-based application that would quickly translate assembly instructions into machine code.
+					</p>
+					<br><h2>How to use Assemblitz</h2>
+					<br><h3>Translating Assembly Code to Machine Code</h3>
+						<ol id="orderedNumList">
+							<li>Input assembly instructions in the text area provided found at the left side of website.</li>
+							<li>Click on the "Assemble" button located at the bottom of the page to translate assembly instructions to its machine language equivalent.
+							</li>
+							<li>The equivalent machine language would be displayed at the upper right part of the page.</li>
+
+						</ol>
+					<br><h3>Viewing the Stack</h3>
+						<ol class="orderedNumList">
+							<li>Click on the "View Stack" button located at the bottom of the web page to view the stack on a pop-up window.
+							</li>
+						</ol>
+					<br><h2>Using the Assemblitz Instruction Set</h2>
+					<ul>
+						<li>read
+							<ul>
+								<li>Assembly code that would make the computer read an integer from the keyboard and store it to the variable name provided
+								</li>
+								<li>Example usage: read number1</li>
+							</ul>
+						</li>
+						<li>disp
+							<ul>
+								<li>Allows the user to display the value stored in the variable</li>
+								<li>Example usage: disp number1</li>
+							</ul>
+						</li>
+						<li>pushi
+							<ul>
+								<li>Places the  given 2-digit integer at the top of the stack register(SR), throws a Stack Overflow Error if the stack register is full</li>
+								<li>Example usage: push 28</li>
+							</ul>
+						</li>
+						<li>pushv
+							<ul>
+								<li>Places the integer stored in a variable to the top of the stack register (SR) and throws a Stack Overflow Error if the stack register is full.</li>
+								<li>Example usage: push number1</li>
+							</ul>
+						</li>
+						<li>pop
+							<ul>
+								<li>Removes the topmost integer found in the stack register and places it in the given variable. Throws an Empty Stack Error if the stack register is empty</li>
+								<li>Example usage: pop number2</li>
+							</ul>
+						</li>
+						<li>mod
+							<ul>
+								<li>Performs modulo operation between the two topmost integers stored in the stack register and stores the result at the topmost location of the stack. If the second topmost location in the stack register is empty then it would throw a Null Operand Error.</li>
+								<li>Example usage: mod</li>
+							</ul>
+						</li>
+						<li>jmp
+							<ul>
+								<li>Jumps to the specified memory location</li>
+								<li>Example usage: jmp add</li>
+							</ul>
+						</li>
+						<li>jl
+							<ul>
+								<li>Jumps to the specified memory location if the value at the top of stack register is less than the value at the second-to-the top location in the stack register. If second-to-the-top location in the stack register is empty, then a Null Compare Error would be thrown.</li>
+								<li>Example usage: jl less</li>
+							</ul>
+						</li>
+						<li>jg
+							<ul>
+								<li>Jumps to the specified memory location if the value at the top of stack register is greater than the value at the second-to-the top location in the stack register. If second-to-the-top location in the stack register is empty, then a Null Compare Error would be thrown.</li>
+								<li>Example usage: jg greater</li>
+							</ul>
+						</li>
+						<li>jeq
+							<ul>
+								<li>Jumps to the specified memory location if the value at the top of stack register is equal to the value at the second-to-the top location in the stack register. If second-to-the-top location in the stack register is empty, then a Null Compare Error would be thrown.</li>
+								<li>Example usage: jeq equal</li>
+							</ul>
+						</li>
+						<li>add
+							<ul>
+								<li>Removes the top-most and the second top-most integer stored in the Stack Register, adds the two values and then stores the sum at the top of the stack. If second-to-the-top location in the stack register is empty, the Null Operand Error would be thrown. Also if the sum is greater than 99, the Overflow Error would be thrown.</li>
+								<li>Example usage: add</li>
+							</ul>
+						</li>
+						<li>sub
+							<ul>
+								<li>Removes the top-most and the second top-most integer stored in the Stack Register, subtracts the two values and then stores the difference at the top of the stack. If second-to-the-top location in the stack register is empty, the Null Operand Error would be thrown. Also if the difference is less than zero, the Overflow Error would be thrown.</li>
+								<li>Example usage: sub</li>
+							</ul>
+						</li>
+						<li>cmp
+							<ul>
+								<li>Removes the top-most and the second top-most integer stored in the Stack Register, compares the two values and then stores the value 1 at the top of stack register if the two values are equal or zero if the two values are not.</li>
+								<li>Example usage: cmp</li>
+							</ul>
+						</li>
+						<li>begin
+							<ul>
+								<li>Indicates the beginning of the assembly code and must be found at the first line of the code only. Otherwise the assembler would throw a Missing Begin Error.</li>
+								<li>Example usage: begin</li>
+							</ul>
+						</li>
+						<li>begin
+							<ul>
+								<li>Indicates the end of the assembly code. All lines declared after the end instruction would be disregarded.</li>
+								<li>Example usage: end</li>
+							</ul>
+						</li>
+					</ul>
+		</main>
+	</body>
+</html>

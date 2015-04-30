@@ -1,0 +1,26 @@
+body{
+	font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+	color:black;
+}
+main {
+	background-color:white;
+}
+img{
+	width:20%;
+}
+ol, ul {
+	margin: 0;
+	border:0;
+	padding-left:40px;
+}
+h1{
+	font-size: 36px;
+	color:red;
+	text-align: center;
+}
+h2{
+	font-size: 32px;
+}
+h3{
+	font-size: 24px;
+}
