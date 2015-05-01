@@ -38,6 +38,9 @@ $(document).ready(function(){
     });
 	$("#translate").click(function(){
 		console.log('init');
+		$('#mach').text('');
+    	$("#out").text('');
+    	$("#stack").text('');
     	reg = new Stack(5);
     	memory = new Array(40);
     	symbol_table = [];
