@@ -140,6 +140,7 @@ $(document).ready(function(){
 		if (index >= commands.length) {
 			$("#next").attr('disabled','disabled');
 		}
+		
 	});
 });
 
