@@ -640,3 +640,7 @@ body {
 /* Track */
 
 /* Handle */
+#logo {
+  position: relative;
+  top: -20px;
+}
