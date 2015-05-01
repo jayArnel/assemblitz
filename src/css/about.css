@@ -1,0 +1,26 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color:#333;
+}
+
+.navbar .container {
+  width: 100%;
+  min-width: 970px;
+  max-width: none !important;
+}
+
+
+.site-wrapper .container {
+  width: 100%;
+  min-width: 970px;
+  max-width: none !important;
+}
+.main {
+	padding: 30px;
+}
+img{
+	width: 200px;
+	height: 200px;
+
+}

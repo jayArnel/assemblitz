@@ -1,5 +1,4 @@
 function clean_code(code) {
-    console.log('cleaning code');
     var clean = [];
     var lines = code.split('\n');
     for (i in lines) {
@@ -12,7 +11,6 @@ function clean_code(code) {
 }
 
 function add_labels(lines) {
-    console.log('adding labels');
     for (i in lines){
         var command = lines[i];
         var name = command.name;
@@ -25,7 +23,6 @@ function add_labels(lines) {
 }
 
 function translate(code) {
-    console.log('translating');
     var lines = clean_code(code);
     add_labels(lines);
     if (lines[0].name != 'begin') {
@@ -87,7 +84,6 @@ function run() {
 
 function execute(i){
     var code = +memory[i];
-    console.log(code);
     var method = +(code.toString().substring(0,2));
     var param = +(code % 100);
     if (method == 11) {
@@ -159,7 +155,7 @@ function execute(i){
         if (memory[param] == undefined) {
             return new Error("Uninitialized Variable", commands[i].line);
         }
-        $("#out").append('<br>'+memory[param]);
+        $("#out").append(memory[param]+'<br>');
     } else if (method == 63) {
         i = param;
     } else if (method == 73) {
@@ -183,7 +179,7 @@ function execute(i){
     } else if (method == 10) {
         return new Error("Misplaced BEGIN Statement", commands[i].line);
     }
-    $("#stack").text(reg.stack.join('\n'));
+    $("#stack").html(reg.stack.join('<br>'));
 }
 function register(name){
     var add = symbol_table[name];

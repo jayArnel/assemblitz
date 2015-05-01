@@ -64,31 +64,15 @@ $(document).ready(function(){
 	});
 
     $("#run").click(function(){
-    	init();
-        var code = $("#input").val();
-        var out = translate(code);
-        if (out instanceof Error) {
-        	$("#out").append('<br>'+out);
-        } else {
-        	$("#mach").html(get_machine_code().join('<br>'));
-        	var out2 = run();
-        	if (out2 instanceof Error) {
-        		$("#out").append('<br>'+out2);
-
-        	}
+    	if (assemble()) {
+    		output();
     	}
-        $("#out").append("<br> Done.");
+        $("#out").append("Done.");
     });
 
 	$("#translate").click(function(){
-		init();
-        var code = $("#input").val();
-        var out = translate(code);
-        if (out instanceof Error) {
-        	$("#out").append('<br>'+out);
-        } else {
-        	$("#mach").html(get_machine_code().join('<br>'));
-        }
+		assemble();
+		$("#out").append("Done.");
     });
 
     $('#input').on('scroll', function () {
@@ -96,15 +80,16 @@ $(document).ready(function(){
 	});
 
     $("#step").click(function(){
-    	init();
-        var code = $("#input").val();
-        var out = translate(code);
-    	step = true;
-    	$("#step-btn").css('visibility', 'visible');
-    	$("#prev").attr('disabled','disabled');
-    	$("#step").hide();
-    	$(".navbar-btn").attr('disabled','disabled');
-    	$("#input").attr('disabled','disabled');
+    	if (assemble()) {
+	    	step = true;
+	    	$("#step-btn").css('visibility', 'visible');
+	    	$("#prev").attr('disabled','disabled');
+	    	$("#step").hide();
+	    	$(".navbar-btn").attr('disabled','disabled');
+	    	$("#input").attr('disabled','disabled');
+	    	$("#next").removeAttr('disabled');
+    	}
+    	$("#out").append("Run:");
     });
 
     $("#stop").click(function(){
@@ -130,6 +115,7 @@ $(document).ready(function(){
 		} else {
 			$(".navbar-btn").attr('disabled','disabled');
 		}
+
      });
 
 	$("#next").click(function() {
@@ -139,9 +125,10 @@ $(document).ready(function(){
 		index++;
 		if (index >= commands.length) {
 			$("#next").attr('disabled','disabled');
+			$("#out").append("Done.");
 		}
-		
 	});
+
 });
 
 /***** Objects *****/
@@ -207,3 +194,26 @@ function get_machine_code(){
 	return mach;
 }
 
+function assemble() {
+	init();
+	$("#out").append("Translating...<br>");
+    var code = $("#input").val();
+    var out = translate(code);
+    if (out instanceof Error) {
+    	$("#out").append(out.toString()+'<br>');
+    	$("#out").append("Aborted.");
+    	return false;
+    } else {
+    	$("#mach").html(get_machine_code().join('<br>'));
+    	return true;
+    }
+}	
+
+function output() {
+	$("#out").append("Run: <br>");
+	var out = run();
+	if (out instanceof Error) {
+		$("#out").append(out.toString()) + '<br>';
+		$("#out").append("Aborted.");
+	}
+}
