@@ -26,25 +26,15 @@ function Stack(cap) {
             return this.stack.pop();
         }
     }
-
-    this.peek = function() {
-        if (this.stack.length == 0) {
-            return new Error('Stack Empty');
-        } else {
-            return this.stack[stack.length - 1];
-        }
-    }
-
-    this.size = function(){
-        return this.stack.length;
-    }
 }
 
+var commands = []
 function Command(line, command) {
+    this.index = null;
     this.line = line;
     this.params = [];
     var tokens = command.split(' ');
-    this.name = tokens[0];
+    this.name = tokens[0].toLowerCase();
     for (var i = 1; i < tokens.length; i++){
         if (tokens[i].length > 0) {
             this.params.push(tokens[i]);
@@ -55,6 +45,8 @@ function Command(line, command) {
     this.num_of_params = function(){
         this.params.length;
     }
+
+    commands.push(this);
 }
 
 Command.prototype.toString = function() {

@@ -9,7 +9,8 @@ symbol_table['add'] = 1200;
 symbol_table['sub'] = 1300;
 symbol_table['cmp'] = 1400;
 
-symbol_table['push'] = 20;
+symbol_table['pushi'] = 21;
+symbol_table['pushv'] = 22;
 symbol_table['pop'] = 42;
 symbol_table['read'] = 52;
 symbol_table['disp'] = 62;
@@ -20,23 +21,5 @@ symbol_table['jeq'] = 93;
 
 var memory = new Array(40);
 
-var code = "begin \n \
-\n \
-\n \
-\n \
-            read N \n\
-push N \n\
-push 2 \n\
-mod \n\
-\n \
-push 0\n\
-jeq      even\n\
-push 0\n\
-pop ans\n\
-jmp stop\n\
-even:\n\
-push 1\n\
-pop ans\n\
-stop:\n\
-disp ans\n\
-end";
+var methods = ['begin', 'end', 'mod', 'add', 'sub', 'cmp', 'pushi',
+	'pushv', 'pop','read', 'disp', 'jmp', 'jl', 'jg','jeq'];
