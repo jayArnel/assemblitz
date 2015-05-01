@@ -125,11 +125,17 @@ $(document).ready(function(){
 	$("#next").click(function() {
 		$("#prev").removeAttr('disabled');
 		console.log(index);
-		execute(index);
-		index++;
-		if (index >= commands.length) {
+		var out = execute(index);
+		if (out instanceof Error) {
+			$("#out").append(out+"<br>");
 			$("#next").attr('disabled','disabled');
-			$("#out").append("Done.");
+			$("#out").append("Aborted.");
+		} else {
+			index++;
+			if (index >= commands.length) {
+				$("#next").attr('disabled','disabled');
+				$("#out").append("Done.");
+			}
 		}
 	});
 
@@ -158,7 +164,7 @@ function Stack(cap) {
         }
     }
 
-    this.pop = function() {
+    this.pop = function(	) {
         if (this.stack.length == 0) {
             return new Error('Empty Stack');
         } else {
