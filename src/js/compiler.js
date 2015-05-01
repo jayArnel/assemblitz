@@ -79,108 +79,112 @@ function translate(code) {
     }
 }
 
-function execute() {
-    for (var i = 1; i < 29 && +memory[i] != 1011 && memory[i] != undefined; i++) {
-        var code = memory[i];
-        var method = +(code.toString().substring(0,2));
-        var param = +(code % 100);
-        if (method == 11) {
-            //mod
-            var arg2 = reg.pop();
-            if (arg2 == undefined) {
-                return new Error("Empty Stack", commands[i].line);
-            }
-            var arg1 = reg.pop();
-            if (arg1 == undefined) {
-                return new Error("Null Operand Error", commands[i].line);   
-            }
-            reg.push(arg1 % arg2);
-        } else if (method == 12) {
-            //add
-            var arg2 = reg.pop();
-            if (arg2 == undefined) {
-                return new Error("Empty Stack", commands[i].line);
-            }
-            var arg1 = reg.pop();
-            if (arg1 == undefined) {
-                return new Error("Null Operand Error", commands[i].line);   
-            }
-            reg.push(arg1 + arg2);
-        } else if (method == 13) {
-            var arg2 = reg.pop();
-            if (arg2 == undefined) {
-                return new Error("Empty Stack", commands[i].line);
-            }
-            var arg1 = reg.pop();
-            if (arg1 == undefined) {
-                return new Error("Null Operand Error", commands[i].line);   
-            }
-            reg.push(arg1 - arg2);
-        } else if (method == 14){
-            var arg2 = reg.pop();
-            if (arg2 == undefined) {
-                return new Error("Empty Stack", commands[i].line);
-            }
-            var arg1 = reg.pop();
-            if (arg1 == undefined) {
-                return new Error("Null Operand Error", commands[i].line);   
-            }
-            reg.push(arg1 == arg2);
-        } else if (method == 21) {
-            var op = reg.push(param);
-            if (op instanceof Error) {
-                return new Error("Stack Overflow", commands[i].line);
-            }
-        } else if (method == 22) {
-            var val = memory[param];
-            if (val == null) {
-                return new Error("Uninitialized Variable", commands[i].line);
-            }
-            var op = reg.push(val);
-            if (op instanceof Error) {
-                return new Error("Stack Overflow", commands[i].line);
-            }
-        } else if (method == 42) {
-            var val = reg.pop();
-            if (val instanceof Error) {
-                return new Error("Empty Stack", commands[i].line);
-            }
-            memory[param] = val;
-        } else if (method == 52) {
-            var val = prompt("Input:");
-            memory[param] = val;
-        } else if (method == 62) {
-            if (memory[param] == undefined) {
-                return new Error("Uninitialized Variable", commands[i].line);
-            }
-            $("#out").append('<br>'+memory[param]);
-        } else if (method == 63) {
-            i = param;
-        } else if (method == 73) {
-            var arg2 = reg.pop();
-            var arg1 = reg.pop();
-            if (arg2 < arg1) {
-                i = param;
-            }
-        } else if (method == 83) {
-            var arg2 = reg.pop();
-            var arg1 = reg.pop();
-            if (arg2 > arg1) {
-                i = param;
-            }
-        } else if (method == 93) {
-            var arg2 = reg.pop();
-            var arg1 = reg.pop();
-            if (arg2 == arg1) {
-                i = param;
-            }
-        } else if (method == 10) {
-            return new Error("Misplaced BEGIN Statement", commands[i].line);
-        }
-        $("#stack").text(reg.stack.join('\n'));
+function run() {
+    for (var i = 0; i < 29 && +memory[i] != 1011 && memory[i] != undefined; i++) {
+        execute(i);
     }   
 }
 
+function execute(i){
+    var code = +memory[i];
+    console.log(code);
+    var method = +(code.toString().substring(0,2));
+    var param = +(code % 100);
+    if (method == 11) {
+        //mod
+        var arg2 = reg.pop();
+        if (arg2 == undefined) {
+            return new Error("Empty Stack", commands[i].line);
+        }
+        var arg1 = reg.pop();
+        if (arg1 == undefined) {
+            return new Error("Null Operand Error", commands[i].line);   
+        }
+        reg.push(arg1 % arg2);
+    } else if (method == 12) {
+        //add
+        var arg2 = reg.pop();
+        if (arg2 == undefined) {
+            return new Error("Empty Stack", commands[i].line);
+        }
+        var arg1 = reg.pop();
+        if (arg1 == undefined) {
+            return new Error("Null Operand Error", commands[i].line);   
+        }
+        reg.push(arg1 + arg2);
+    } else if (method == 13) {
+        var arg2 = reg.pop();
+        if (arg2 == undefined) {
+            return new Error("Empty Stack", commands[i].line);
+        }
+        var arg1 = reg.pop();
+        if (arg1 == undefined) {
+            return new Error("Null Operand Error", commands[i].line);   
+        }
+        reg.push(arg1 - arg2);
+    } else if (method == 14){
+        var arg2 = reg.pop();
+        if (arg2 == undefined) {
+            return new Error("Empty Stack", commands[i].line);
+        }
+        var arg1 = reg.pop();
+        if (arg1 == undefined) {
+            return new Error("Null Operand Error", commands[i].line);   
+        }
+        reg.push(arg1 == arg2);
+    } else if (method == 21) {
+        var op = reg.push(param);
+        if (op instanceof Error) {
+            return new Error("Stack Overflow", commands[i].line);
+        }
+    } else if (method == 22) {
+        var val = memory[param];
+        if (val == null) {
+            return new Error("Uninitialized Variable", commands[i].line);
+        }
+        var op = reg.push(val);
+        if (op instanceof Error) {
+            return new Error("Stack Overflow", commands[i].line);
+        }
+    } else if (method == 42) {
+        var val = reg.pop();
+        if (val instanceof Error) {
+            return new Error("Empty Stack", commands[i].line);
+        }
+        memory[param] = val;
+    } else if (method == 52) {
+        var val = prompt("Input:");
+        memory[param] = val;
+    } else if (method == 62) {
+        if (memory[param] == undefined) {
+            return new Error("Uninitialized Variable", commands[i].line);
+        }
+        $("#out").append('<br>'+memory[param]);
+    } else if (method == 63) {
+        i = param;
+    } else if (method == 73) {
+        var arg2 = reg.pop();
+        var arg1 = reg.pop();
+        if (arg2 < arg1) {
+            i = param;
+        }
+    } else if (method == 83) {
+        var arg2 = reg.pop();
+        var arg1 = reg.pop();
+        if (arg2 > arg1) {
+            i = param;
+        }
+    } else if (method == 93) {
+        var arg2 = reg.pop();
+        var arg1 = reg.pop();
+        if (arg2 == arg1) {
+            i = param;
+        }
+    } else if (method == 10) {
+        return new Error("Misplaced BEGIN Statement", commands[i].line);
+    }
+    $("#stack").text(reg.stack.join('\n'));
+}
 function register(name){
     var add = symbol_table[name];
     if (add == undefined) {

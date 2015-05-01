@@ -565,7 +565,9 @@ body {
   color: #888;
   overflow: hidden;
 }
-
+#step-btn {
+  visibility:hidden;
+}
 body {
   min-width: 970px;
 }

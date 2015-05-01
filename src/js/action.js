@@ -4,8 +4,65 @@ var symbol_table;
 var memory;
 var methods = ['begin', 'end', 'mod', 'add', 'sub', 'cmp', 'pushi',
 	'pushv', 'pop','read', 'disp', 'jmp', 'jl', 'jg','jeq'];
+var step;
+var index;
+var commands;
+function init() {
+	commands = [];
+	reg = new Stack(5);
+	symbol_table = [];
+
+	symbol_table['begin'] = 1000;
+	symbol_table['end'] = 1011;
+	symbol_table['mod'] = 1100;
+	symbol_table['add'] = 1200;
+	symbol_table['sub'] = 1300;
+	symbol_table['cmp'] = 1400;
+
+	symbol_table['pushi'] = 21;
+	symbol_table['pushv'] = 22;
+	symbol_table['pop'] = 42;
+	symbol_table['read'] = 52;
+	symbol_table['disp'] = 62;
+	symbol_table['jmp'] = 63;
+	symbol_table['jl'] = 73;
+	symbol_table['jg'] = 83;
+	symbol_table['jeq'] = 93;
+
+	memory = new Array(40);
+	$('#mach').text('');
+	$("#out").text('');
+	$("#stack").text('');
+
+	step = false;
+	index = 0;
+}
+
 
 $(document).ready(function(){
+    BehaveHooks.add(['keydown'], function(data){
+		var numLines = data.lines.total,
+			house = document.getElementsByClassName('line-nums')[0],
+			html = '',
+			i;
+		for(i=0; i<numLines; i++){
+			html += '<div>'+(i+1)+'</div>';					
+		}
+		house.innerHTML = html;
+	});
+	
+	var editor = new Behave({
+	
+		textarea: 		document.getElementById('input'),
+		replaceTab: 	true,
+	    softTabs: 		true,
+	    tabSize: 		4,
+	    autoOpen: 		true,
+	    overwrite: 		true,
+	    autoStrip: 		true,
+	    autoIndent: 	true
+	});
+
     $("#run").click(function(){
     	init();
         var code = $("#input").val();
@@ -14,7 +71,7 @@ $(document).ready(function(){
         	$("#out").append('<br>'+out);
         } else {
         	$("#mach").html(get_machine_code().join('<br>'));
-        	var out2 = execute();
+        	var out2 = run();
         	if (out2 instanceof Error) {
         		$("#out").append('<br>'+out2);
 
@@ -36,6 +93,53 @@ $(document).ready(function(){
 
     $('#input').on('scroll', function () {
 	    $('.line-nums').scrollTop($(this).scrollTop());
+	});
+
+    $("#step").click(function(){
+    	init();
+        var code = $("#input").val();
+        var out = translate(code);
+    	step = true;
+    	$("#step-btn").css('visibility', 'visible');
+    	$("#prev").attr('disabled','disabled');
+    	$("#step").hide();
+    	$(".navbar-btn").attr('disabled','disabled');
+    	$("#input").attr('disabled','disabled');
+    });
+
+    $("#stop").click(function(){
+    	step = false;
+    	$(".navbar-btn").removeAttr('disabled');
+    	$("#step-btn").css('visibility', 'hidden');
+    	$("#step").show();
+    	$("#input").removeAttr('disabled');
+    	index = 0;
+    });
+
+    $('#input').bind('input propertychange', function() {
+		if(this.value.length > 0){
+			$(".navbar-btn").removeAttr('disabled');
+		} else {
+			$(".navbar-btn").attr('disabled','disabled');
+		}
+	});
+
+	$('#input').keyup(function() {
+        if($(this).val() != '') {
+        	$(".navbar-btn").removeAttr('disabled');
+		} else {
+			$(".navbar-btn").attr('disabled','disabled');
+		}
+     });
+
+	$("#next").click(function() {
+		$("#prev").removeAttr('disabled');
+		console.log(index);
+		execute(index);
+		index++;
+		if (index >= commands.length) {
+			$("#next").attr('disabled','disabled');
+		}
 	});
 });
 
@@ -70,7 +174,6 @@ function Stack(cap) {
     }
 }
 
-var commands = []
 function Command(line, command) {
     this.index = null;
     this.line = line;
@@ -90,34 +193,6 @@ function Command(line, command) {
 }
 
 /****  end of Objets *****/
-
-/*** functions ***/
-function init() {
-	reg = new Stack(5);
-	symbol_table = [];
-
-	symbol_table['begin'] = 1000;
-	symbol_table['end'] = 1011;
-	symbol_table['mod'] = 1100;
-	symbol_table['add'] = 1200;
-	symbol_table['sub'] = 1300;
-	symbol_table['cmp'] = 1400;
-
-	symbol_table['pushi'] = 21;
-	symbol_table['pushv'] = 22;
-	symbol_table['pop'] = 42;
-	symbol_table['read'] = 52;
-	symbol_table['disp'] = 62;
-	symbol_table['jmp'] = 63;
-	symbol_table['jl'] = 73;
-	symbol_table['jg'] = 83;
-	symbol_table['jeq'] = 93;
-
-	memory = new Array(40);
-	$('#mach').text('');
-	$("#out").text('');
-	$("#stack").text('');
-}
 
 function get_machine_code(){
 	var mach = [];

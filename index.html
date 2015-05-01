@@ -23,12 +23,24 @@
           <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="index.html">
-                    <img alt="Assemblitz" src="src/img/logo2.png">
+                    <!-- <img alt="Assemblitz" src="src/img/logo2.png"> -->Assemblitz
                 </a>
             </div>
             <div>
-                <button type="button" class="btn btn-danger navbar-btn" id = "run">RUN</button>
-                <button type="button" class="btn btn-default btn-sm navbar-btn" id = "translate">TRANSLATE</button>
+                <button type="button" class="btn btn-danger navbar-btn" id = "run" disabled>RUN</button>
+                <button type="button" class="btn btn-default navbar-btn" id = "translate" disabled>TRANSLATE</button>
+                <button type="button" class="btn btn-default navbar-btn" id = "step" disabled>STEP-BY-STEP</button>
+                <div class="btn-group" role="group" aria-label="..." id = "step-btn">
+                    <button type="button" class="btn btn-default" id = "prev">
+                        <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" id = "stop">
+                        <span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" id = "next">
+                        <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+                    </button>
+                </div>
                 <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">File</a></li>
                 <li><a href="#">Help</a></li>
@@ -66,11 +78,8 @@
         </div>
     </div>
     <script src="src/js/jquery-1.11.2.min.js"></script>
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="src/js/bootstrap.min.js"></script>
     <script type="text/javascript" src = "src/js/behave.js"></script>
-    <script type="text/javascript" src = "src/js/liner_behave.js"></script>
-    <script type="text/javascript" src = "src/js/classes.js"></script>
-    <script type="text/javascript" src = "src/js/resources.js"></script>
     <script type="text/javascript" src = "src/js/compiler.js"></script>
     <script type="text/javascript" src = "src/js/action.js"></script>
   </body>
