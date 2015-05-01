@@ -26,18 +26,6 @@ function Stack(cap) {
             return this.stack.pop();
         }
     }
-
-    this.peek = function() {
-        if (this.stack.length == 0) {
-            return new Error('Stack Empty');
-        } else {
-            return this.stack[stack.length - 1];
-        }
-    }
-
-    this.size = function(){
-        return this.stack.length;
-    }
 }
 
 var commands = []
