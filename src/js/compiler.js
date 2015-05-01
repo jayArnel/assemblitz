@@ -142,7 +142,7 @@ function execute() {
             }
         } else if (method == 42) {
             var val = reg.pop();
-            if (val == undefined) {
+            if (val instanceof Error) {
                 return new Error("Empty Stack", commands[i].line);
             }
             memory[param] = val;

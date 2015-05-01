@@ -70,6 +70,7 @@ body, .panel-body {
 	border-radius: 0;
 	border: none;
 	color: white;
+	outline: none;
 }
 
 #mach {
