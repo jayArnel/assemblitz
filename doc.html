@@ -51,100 +51,158 @@
                     </h4>
                     <h2>Using the Assemblitz Instruction Set</h2>
                     <ul>
-                        <li>read
+                        <li><h3>read</h3>
                             <ul>
                                 <li>Assembly code that would make the computer read an integer from the keyboard and store it to the variable name provided
                                 </li>
                                 <li>Example usage: read number1</li>
                             </ul>
                         </li>
-                        <li>disp
+                        <li><h3>disp</h3>
                             <ul>
                                 <li>Allows the user to display the value stored in the variable</li>
                                 <li>Example usage: disp number1</li>
                             </ul>
                         </li>
-                        <li>pushi
+                        <li><h3>pushi</h3>
                             <ul>
                                 <li>Places the  given 2-digit integer at the top of the stack register(SR), throws a Stack Overflow Error if the stack register is full</li>
                                 <li>Example usage: pushi 28</li>
                             </ul>
                         </li>
-                        <li>pushv
+                        <li><h3>pushv</h3>
                             <ul>
                                 <li>Places the integer stored in a variable to the top of the stack register (SR) and throws a Stack Overflow Error if the stack register is full.</li>
                                 <li>Example usage: pushv number1</li>
                             </ul>
                         </li>
-                        <li>pop
+                        <li><h3>pop</h3>
                             <ul>
                                 <li>Removes the topmost integer found in the stack register and places it in the given variable. Throws an Empty Stack Error if the stack register is empty</li>
                                 <li>Example usage: pop number2</li>
                             </ul>
                         </li>
-                        <li>mod
+                        <li><h3>mod</h3>
                             <ul>
                                 <li>Performs modulo operation between the two topmost integers stored in the stack register and stores the result at the topmost location of the stack. If the second topmost location in the stack register is empty then it would throw a Null Operand Error.</li>
                                 <li>Example usage: mod</li>
                             </ul>
                         </li>
-                        <li>jmp
+                        <li><h3>jmp</h3>
                             <ul>
                                 <li>Jumps to the specified memory location</li>
                                 <li>Example usage: jmp add</li>
                             </ul>
                         </li>
-                        <li>jl
+                        <li><h3>jl</h3>
                             <ul>
                                 <li>Jumps to the specified memory location if the value at the top of stack register is less than the value at the second-to-the top location in the stack register. If second-to-the-top location in the stack register is empty, then a Null Compare Error would be thrown.</li>
                                 <li>Example usage: jl less</li>
                             </ul>
                         </li>
-                        <li>jg
+                        <li><h3>jg</h3>
                             <ul>
                                 <li>Jumps to the specified memory location if the value at the top of stack register is greater than the value at the second-to-the top location in the stack register. If second-to-the-top location in the stack register is empty, then a Null Compare Error would be thrown.</li>
                                 <li>Example usage: jg greater</li>
                             </ul>
                         </li>
-                        <li>jeq
+                        <li><h3>jeq</h3>
                             <ul>
                                 <li>Jumps to the specified memory location if the value at the top of stack register is equal to the value at the second-to-the top location in the stack register. If second-to-the-top location in the stack register is empty, then a Null Compare Error would be thrown.</li>
                                 <li>Example usage: jeq equal</li>
                             </ul>
                         </li>
-                        <li>add
+                        <li><h3>add</h3>
                             <ul>
                                 <li>Removes the top-most and the second top-most integer stored in the Stack Register, adds the two values and then stores the sum at the top of the stack. If second-to-the-top location in the stack register is empty, the Null Operand Error would be thrown. Also if the sum is greater than 99, the Overflow Error would be thrown.</li>
                                 <li>Example usage: add</li>
                             </ul>
                         </li>
-                        <li>sub
+                        <li><h3>sub</h3>
                             <ul>
                                 <li>Removes the top-most and the second top-most integer stored in the Stack Register, subtracts the two values and then stores the difference at the top of the stack. If second-to-the-top location in the stack register is empty, the Null Operand Error would be thrown. Also if the difference is less than zero, the Overflow Error would be thrown.</li>
                                 <li>Example usage: sub</li>
                             </ul>
                         </li>
-                        <li>cmp
+                        <li><h3>cmp</h3>
                             <ul>
                                 <li>Removes the top-most and the second top-most integer stored in the Stack Register, compares the two values and then stores the value 1 at the top of stack register if the two values are equal or zero if the two values are not.</li>
                                 <li>Example usage: cmp</li>
                             </ul>
                         </li>
-                        <li>begin
+                        <li><h3>begin</h3>
                             <ul>
                                 <li>Indicates the beginning of the assembly code and must be found at the first line of the code only. Otherwise the assembler would throw a Missing Begin Error.</li>
                                 <li>Example usage: begin</li>
                             </ul>
                         </li>
-                        <li>begin
+                        <li><h3>end</h3>
                             <ul>
                                 <li>Indicates the end of the assembly code. All lines declared after the end instruction would be disregarded.</li>
                                 <li>Example usage: end</li>
                             </ul>
                         </li>
                     </ul>
-                </div>
-
+                    <h2> Error List</h2>
+                    <ul>
+                        <li><h3> Translation Errors</h3>
+                        <ul>
+                            <li>
+                                <h4>Missing BEGIN Statement</h4>
+                                <h5>occurs when the source code does not start with a <code>begin</code> statement </h5>
+                            </li>
+                            <li>
+                                <h4>Misplaced BEGIN Statement</h4>
+                                <h5>occurs when a <code>begin</code> statement is found in the line other than the first</h5>
+                            </li>
+                            <li>
+                                <h4>Unknown Method</h4>
+                                <h5>occurs when the source code does not contains a method unsupported by the language. </h5>
+                            </li>
+                            <li>
+                                <h4>Unsupported Operand</h4>
+                                <h5>occurs when a method that does not support an operand is supplied with at least one </h5>
+                            </li>
+                            <li>
+                                <h4>Missing Operand</h4>
+                                <h5>occurs when a method that requires an operand is not supplied with one </h5>
+                            </li>
+                            <li>
+                                <h4>Multiple Operand</h4>
+                                <h5>occurs when a method is supplied with more than the number of operands it require</h5>
+                            </li>
+                            <li>
+                                <h4>Label Not Found</h4>
+                                <h5>occurs when a label or location identifier not found in the source code is used</h5>
+                            </li>
+                            <li>
+                                <h4>Missing END Statement</h4>
+                                <h5>occurs when the source code does not end with a <code>end</code> statement </h5>
+                            </li>
+                        </ul>
+                        </li>
+                        <li>
+                            <h3> Runtime Errors</h3>
+                            <ul>
+                            <li>
+                                <h4>Stack Overflow</h4>
+                                <h5>occurs when a value is pushed when the stack is already full</h5>
+                            </li>
+                            <li>
+                                <h4>Empty Stack</h4>
+                                <h5>occurs when a the empty stack is popped </h5>
+                            </li>
+                            <li>
+                                <h4>Null Operand Error</h4>
+                                <h5>occurs when a method accesses an empty stack </h5>
+                            </li>
+                            <li>
+                                <h4>Uninitialized Variable</h4>
+                                <h5>occurs when a unintialized variable is used</h5>
+                            </li>
+                            </ul>
+                        </li>
+                    </ul>
                 <h2>Repository</h2>
                 <h4>Assemblitz is hosted at <a href = "https://github.com/">GitHub</a>.
                 Visit the repository <a href = "https://github.com/assemblitz/assemblitz.github.io">here</a>.</h4>
