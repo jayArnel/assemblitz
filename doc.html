@@ -46,6 +46,7 @@
                         <li>Click on the <button type="button" class="btn btn-danger navbar-btn" id = "run">RUN</button> to execute your code. 
                         <li>The code will be first translated to a machine code, which will be shown in the 'Machine Code' window</li>
                         <li>The output of the execution will be shown in the 'Output' window.</li>
+                        <li>The machine code can be viewed without executing it. Just click on the <button type="button" class="btn btn-default navbar-btn" id = "translate">TRANSLATE</button> button.</li>
                     </ol>
                     </h4>
                     <h2>Using the Assemblitz Instruction Set</h2>
@@ -66,13 +67,13 @@
                         <li>pushi
                             <ul>
                                 <li>Places the  given 2-digit integer at the top of the stack register(SR), throws a Stack Overflow Error if the stack register is full</li>
-                                <li>Example usage: push 28</li>
+                                <li>Example usage: pushi 28</li>
                             </ul>
                         </li>
                         <li>pushv
                             <ul>
                                 <li>Places the integer stored in a variable to the top of the stack register (SR) and throws a Stack Overflow Error if the stack register is full.</li>
-                                <li>Example usage: push number1</li>
+                                <li>Example usage: pushv number1</li>
                             </ul>
                         </li>
                         <li>pop

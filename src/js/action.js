@@ -133,6 +133,7 @@ $(document).ready(function(){
 		}
 	});
 
+
 });
 
 /***** Objects *****/
@@ -157,7 +158,7 @@ function Stack(cap) {
         }
     }
 
-    this.pop = function(e) {
+    this.pop = function() {
         if (this.stack.length == 0) {
             return new Error('Empty Stack');
         } else {
@@ -223,3 +224,12 @@ function output() {
 	}
 	return true;
 }
+
+function readSingleFile() {
+     var file = document.getElementById('file').files[0];
+    if (file) {
+        //  getAsText(file);
+        alert("Name: " + file.name + "\n" + "Last Modified Date :" + file.lastModifiedDate);
+    }
+ }
+ 

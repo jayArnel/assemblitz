@@ -3,7 +3,7 @@ function clean_code(code) {
     var lines = code.split('\n');
     for (i in lines) {
         var l = lines[i].trim();
-        if (l.length > 0) {
+        if (l.length > 0 || l.charAt(';')) {
             clean.push(new Command(+i + 1, l));
         }
     }
@@ -92,51 +92,67 @@ function execute(i){
     if (method == 11) {
         //mod
         var arg2 = reg.pop();
-        if (arg2 == undefined) {
+        if (arg2 instanceof Error) {
             return new Error("Empty Stack", commands[i].line);
         }
         var arg1 = reg.pop();
-        if (arg1 == undefined) {
-            return new Error("Null Operand Error", commands[i].line);   
+        if (arg1 instanceof Error) {
+            return new Error("Null Operand", commands[i].line);   
         }
-        reg.push(arg1 % arg2);
+        var out = reg.push(arg1 % arg2);
+        if (out instanceof Error) {
+            return new Error("Stack Overflow", commands[i].line);   
+        }
     } else if (method == 12) {
         //add
         var arg2 = reg.pop();
-        if (arg2 == undefined) {
+        if (arg2 instanceof Error) {
             return new Error("Empty Stack", commands[i].line);
         }
         var arg1 = reg.pop();
-        if (arg1 == undefined) {
-            return new Error("Null Operand Error", commands[i].line);   
+        if (arg1 instanceof Error) {
+            return new Error("Null Operand", commands[i].line);   
         }
-        reg.push(arg1 + arg2);
+        var out = reg.push(arg1 + arg2);
+        if (out instanceof Error) {
+            return new Error("Stack Overflow", commands[i].line);   
+        }
     } else if (method == 13) {
+        //sub
         var arg2 = reg.pop();
-        if (arg2 == undefined) {
+        if (arg2 instanceof Error) {
             return new Error("Empty Stack", commands[i].line);
         }
         var arg1 = reg.pop();
-        if (arg1 == undefined) {
-            return new Error("Null Operand Error", commands[i].line);   
+        if (arg1 instanceof Error) {
+            return new Error("Null Operand", commands[i].line);   
         }
-        reg.push(arg1 - arg2);
+        var out = reg.push(arg1 - arg2);
+        if (out instanceof Error) {
+            return new Error("Stack Overflow", commands[i].line);   
+        }
     } else if (method == 14){
+        //cmp
         var arg2 = reg.pop();
-        if (arg2 == undefined) {
+        if (arg2 instanceof Error) {
             return new Error("Empty Stack", commands[i].line);
         }
         var arg1 = reg.pop();
-        if (arg1 == undefined) {
-            return new Error("Null Operand Error", commands[i].line);   
+        if (arg1 instanceof Error) {
+            return new Error("Null Operand", commands[i].line);   
         }
-        reg.push(arg1 == arg2);
+        var out = reg.push(arg1 == arg2);
+        if (out instanceof Error) {
+            return new Error("Stack Overflow", commands[i].line);   
+        }
     } else if (method == 21) {
+        //pushi
         var op = reg.push(param);
         if (op instanceof Error) {
             return new Error("Stack Overflow", commands[i].line);
         }
     } else if (method == 22) {
+        //pushv
         var val = memory[param];
         if (val == null) {
             return new Error("Uninitialized Variable", commands[i].line);
@@ -146,37 +162,62 @@ function execute(i){
             return new Error("Stack Overflow", commands[i].line);
         }
     } else if (method == 42) {
+        //pop
         var val = reg.pop();
         if (val instanceof Error) {
             return new Error("Empty Stack", commands[i].line);
         }
         memory[param] = val;
     } else if (method == 52) {
+        //read
         var val = prompt("Input:");
         memory[param] = val;
     } else if (method == 62) {
+        //disp
         var val = memory[param];
         if (val === null) {
             return new Error("Uninitialized Variable", commands[i].line);
         }
         $("#out").append(memory[param]+'<br>');
     } else if (method == 63) {
+        //jmp
         i = param;
     } else if (method == 73) {
+        //jl
         var arg2 = reg.pop();
+        if (arg2 instanceof Error) {
+            return new Error("Empty Stack", commands[i].line);
+        }
         var arg1 = reg.pop();
+        if (arg1 instanceof Error) {
+            return new Error("Null Operand Error", commands[i].line);   
+        }
         if (arg2 < arg1) {
             i = param;
         }
     } else if (method == 83) {
+        //jg
         var arg2 = reg.pop();
+        if (arg2 instanceof Error) {
+            return new Error("Empty Stack", commands[i].line);
+        }
         var arg1 = reg.pop();
+        if (arg1 instanceof Error) {
+            return new Error("Null Operand Error", commands[i].line);   
+        }
         if (arg2 > arg1) {
             i = param;
         }
     } else if (method == 93) {
+        //jeq
         var arg2 = reg.pop();
+        if (arg2 instanceof Error) {
+            return new Error("Empty Stack", commands[i].line);
+        }
         var arg1 = reg.pop();
+        if (arg1 instanceof Error) {
+            return new Error("Null Operand Error", commands[i].line);   
+        }
         if (arg2 == arg1) {
             i = param;
         }
