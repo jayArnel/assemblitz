@@ -39,6 +39,7 @@ function Stack(cap) {
         return this.stack.length;
     }
 }
+
 var commands = []
 function Command(line, command) {
     this.index = null;
@@ -63,11 +64,3 @@ function Command(line, command) {
 Command.prototype.toString = function() {
     return this.line +": " + this.command;
 }
-
-function getCommandByIndex(index) {
-    for (i in commands) {
-        if (commands[i].index = index) {
-            return commands[i];
-        }
-    }
-};
