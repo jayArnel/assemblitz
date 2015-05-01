@@ -66,6 +66,9 @@ $(document).ready(function(){
         	$("#mach").html(get_machine_code().join('<br>'));
         }
     });
+    $('#input').on('scroll', function () {
+	    $('.line-nums').scrollTop($(this).scrollTop());
+	});
 });
 
 function get_machine_code(){
