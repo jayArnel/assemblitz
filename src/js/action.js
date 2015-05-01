@@ -65,14 +65,18 @@ $(document).ready(function(){
 
     $("#run").click(function(){
     	if (assemble()) {
-    		output();
+    		if (output()){
+    			$("#out").append("Done.");		
+    		}
     	}
-        $("#out").append("Done.");
+        
     });
 
 	$("#translate").click(function(){
-		assemble();
-		$("#out").append("Done.");
+		if (assemble()){
+			$("#out").append("Done.");
+		}
+		
     });
 
     $('#input').on('scroll', function () {
@@ -88,8 +92,8 @@ $(document).ready(function(){
 	    	$(".navbar-btn").attr('disabled','disabled');
 	    	$("#input").attr('disabled','disabled');
 	    	$("#next").removeAttr('disabled');
+    		$("#out").append("Run: <br>");
     	}
-    	$("#out").append("Run:");
     });
 
     $("#stop").click(function(){
@@ -213,7 +217,9 @@ function output() {
 	$("#out").append("Run: <br>");
 	var out = run();
 	if (out instanceof Error) {
-		$("#out").append(out.toString()) + '<br>';
+		$("#out").append(out.toString() + '<br>');
 		$("#out").append("Aborted.");
+		return false;
 	}
+	return true;
 }

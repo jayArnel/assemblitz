@@ -78,7 +78,10 @@ function translate(code) {
 
 function run() {
     for (var i = 0; i < 29 && +memory[i] != 1011 && memory[i] != undefined; i++) {
-        execute(i);
+        var out = execute(i);
+        if (out instanceof Error) {
+            return out;
+        }
     }   
 }
 
@@ -152,7 +155,8 @@ function execute(i){
         var val = prompt("Input:");
         memory[param] = val;
     } else if (method == 62) {
-        if (memory[param] == undefined) {
+        var val = memory[param];
+        if (val === null) {
             return new Error("Uninitialized Variable", commands[i].line);
         }
         $("#out").append(memory[param]+'<br>');
@@ -176,8 +180,6 @@ function execute(i){
         if (arg2 == arg1) {
             i = param;
         }
-    } else if (method == 10) {
-        return new Error("Misplaced BEGIN Statement", commands[i].line);
     }
     $("#stack").html(reg.stack.join('<br>'));
 }
@@ -185,7 +187,7 @@ function register(name){
     var add = symbol_table[name];
     if (add == undefined) {
         for (var i = 30; i < 39; i++){
-            if (memory[i] == undefined) {
+            if (memory[i] === undefined) {
                 symbol_table[name] = i;
                 memory[i] = null;
                 return i;
