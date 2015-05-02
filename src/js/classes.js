@@ -46,7 +46,7 @@ function Command(line, command) {
     this.line = line;
     this.params = [];
     var tokens = command.split(' ');
-    this.name = tokens[0];
+    this.name = tokens[0].toLowerCase();
     for (var i = 1; i < tokens.length; i++){
         if (tokens[i].length > 0) {
             this.params.push(tokens[i]);

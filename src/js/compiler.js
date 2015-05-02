@@ -20,11 +20,7 @@ function add_labels(lines) {
             var label = name.substring(0, name.length - 1);
             symbol_table[label] = 91 * 100+ (+i);
             symbol_table[91 * 100+ (+i)] = +i;
-            console.log(name);
-            console.log(symbol_table[name]);
-            console.log(isMethod(name));
         }
-        console.log('not a label');
     }
 }
 
@@ -32,11 +28,20 @@ function translate(code) {
     console.log('translating');
     var lines = clean_code(code);
     add_labels(lines);
-    for (i in lines) {
+    if (lines[0].name != 'begin') {
+        return new Error("Missing BEGIN Statement", 0);
+    } else {
+        memory[0] = 1000;
+    }
+    if (lines[lines.length - 1].name != 'end') {
+        return new Error("Missing END statement", lines[lines.length - 1].line);
+    } else {
+        memory[lines.length - 1] = 1011;
+    }
+    for (var i = 1; i < lines.length-1; i++) {
         var command = lines[i];
         var name = command.name;
-        if (isMethod(name)) {  
-            console.log('is a method');
+        if (isMethod(name)) {
             if (no_param(name)) {
                 if (command.num_of_params > 0) {
                     return new Error("Unsupported Operand", command.line);
@@ -66,7 +71,6 @@ function translate(code) {
                 }
             }
         } else if (isLabel(name)) {
-            console.log('is a label');
             name = name.substring(0, name.length - 1);
             memory[i] = symbol_table[name];
         } else {
@@ -76,9 +80,6 @@ function translate(code) {
 }
 
 function execute() {
-    if (memory[0] != 1000) {
-        return new Error("Missing BEGIN Statement", 0);
-    }
     for (var i = 1; i < 29 && +memory[i] != 1011 && memory[i] != undefined; i++) {
         var code = memory[i];
         var method = +(code.toString().substring(0,2));
