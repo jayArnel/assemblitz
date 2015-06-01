@@ -1,2 +1,2 @@
 #Assemblitz
-a myAsem assembler
+A myAsem assembler.
